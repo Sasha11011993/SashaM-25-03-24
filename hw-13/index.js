@@ -9,4 +9,4 @@ function deleteSymbol(string, symbol) {
 }
 
 const result = deleteSymbol(string, symbol);
-console.log(result);
+alert(result);
