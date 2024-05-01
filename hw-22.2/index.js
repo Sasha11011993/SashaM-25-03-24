@@ -1,33 +1,25 @@
-const randomImage = document.getElementById("random-image");
+const imgContainer = document.createElement("div");
+imgContainer.classList.add("random-image");
+const elemBody = document.querySelector("body");
+elemBody.appendChild(imgContainer);
 
-randomImage.src = "./images/1.jpg";
-// randomImage.src = "../images/2";
-// randomImage.src = "../images/3";
-// randomImage.src = "../images/4";
-// randomImage.src = "../images/5";
-// randomImage.src = "../images/6";
-// randomImage.src = "../images/7";
-// randomImage.src = "../images/8";
-// randomImage.src = "../images/9";
+const imageSources = [
+  "./images/1.jpg",
+  "./images/2.jpg",
+  "./images/3.jpg",
+  "./images/4.jpg",
+  "./images/5.jpg",
+  "./images/6.jpg",
+  "./images/7.jpg",
+  "./images/8.jpg",
+  "./images/9.jpg",
+];
 
-// // Масив із шляхами до зображень
-// const imagePaths = [
-//   "1.jpg",
-//   "2.jpg",
-//   "3.jpg",
-//   "4.jpg",
-//   "5.jpg",
-//   "6.jpg",
-//   "7.jpg",
-//   "8.jpg",
-//   "9.jpg",
-// ];
+const randomIndex = Math.floor(Math.random() * imageSources.length);
 
-// // Генеруємо випадковий індекс для вибору зображення з масиву
-// const randomIndex = Math.floor(Math.random() * imagePaths.length);
+const randomImagePath = imageSources[randomIndex];
 
-// // Отримуємо посилання на елемент зображення
-// const randomImage = document.getElementById("randomImage");
+const randomImg = document.createElement("img");
+randomImg.src = randomImagePath;
 
-// // Встановлюємо випадковий шлях до зображення
-// randomImage.src = imagePaths[randomIndex];
+imgContainer.appendChild(randomImg);
