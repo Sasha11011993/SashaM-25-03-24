@@ -21,8 +21,8 @@ function changeColor() {
     button.style.color === initialColor &&
     button.style.backgroundColor === initialBackgroundColor
   ) {
-    button.style.color = "red";
-    button.style.backgroundColor = "blue";
+    button.style.color = "white";
+    button.style.backgroundColor = "black";
   } else {
     button.style.color = initialColor;
     button.style.backgroundColor = initialBackgroundColor;
