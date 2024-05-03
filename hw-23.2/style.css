@@ -1,0 +1,21 @@
+body {
+  box-sizing: border-box;
+}
+
+[datatype="first"],
+[datatype="second"],
+[datatype="third"] {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background: #4caf50;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+[datatype="first"]:hover,
+[datatype="second"]:hover,
+[datatype="third"]:hover {
+  background-color: green;
+}
