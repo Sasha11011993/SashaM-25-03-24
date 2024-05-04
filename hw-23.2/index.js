@@ -11,5 +11,7 @@
 const parentContainer = document.querySelector("#container");
 
 parentContainer.addEventListener("click", function (e) {
-  alert("Клікнуто на : " + e.target.textContent);
+  if (e.target !== this) {
+    alert("Клікнуто на : " + e.target.textContent);
+  }
 });

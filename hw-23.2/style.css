@@ -19,3 +19,8 @@ body {
 [datatype="third"]:hover {
   background-color: green;
 }
+
+.container {
+  display: flex;
+  gap: 20px;
+}
