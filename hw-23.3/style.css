@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-  width: 500px;
+  width: 40%;
   height: 100%;
   margin: auto;
   background-color: rgb(150, 229, 150);
@@ -24,8 +24,8 @@ body {
 }
 
 #todo-li {
+  height: fit-content;
   max-width: 100%;
-  max-height: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,8 +34,13 @@ body {
   background-color: wheat;
   border-radius: 10px;
   padding-left: 10px;
-  word-wrap: break-word;
-  hyphens: auto;
+  word-break: break-all;
+}
+
+#todo-li:hover {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
 }
 
 #li-div {
@@ -48,6 +53,7 @@ body {
 #btnDelete,
 #btnSave,
 #btnNo {
+  height: 100%;
   font-size: 20px;
   padding: 5px 15px;
   border-radius: 10px;
