@@ -1,0 +1,56 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: sans-serif;
+}
+
+.container {
+  width: 60%;
+  height: 100%;
+  margin: auto;
+  background-color: rgb(229, 225, 225);
+
+  padding: 50px;
+}
+
+h1 {
+  color: rgb(227, 100, 100);
+}
+
+.input-container {
+  width: 60%;
+}
+
+input,
+textarea,
+button {
+  width: 100%;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  font-size: 24px;
+  transition: 0.3s;
+  padding: 10px;
+}
+
+.error {
+  border: 2px solid red;
+}
+
+button:hover {
+  background-color: rgb(99, 99, 235);
+  color: white;
+  box-shadow: 0 5px 8px rgb(99, 99, 235);
+}
+
+p {
+  color: red;
+  font-size: 20px;
+}
