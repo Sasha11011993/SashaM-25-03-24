@@ -16,25 +16,41 @@ function addTask() {
   }
 }
 
-function createTask(inputValue) {
+function createTask(inputValue, isCompleted) {
   const li = document.createElement("li");
   li.classList.add("todo-item");
-  li.innerHTML = `<input type="checkbox" />
-          <span class="todo-item__description">${inputValue}</span>
-          <button class="todo-item__delete">Видалити</button>`;
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  li.appendChild(checkbox);
+
+  const descriptionSpan = document.createElement("span");
+  descriptionSpan.classList.add("todo-item__description");
+  descriptionSpan.textContent = inputValue;
+  li.appendChild(descriptionSpan);
+
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("todo-item__delete");
+  deleteButton.textContent = "Видалити";
+  li.appendChild(deleteButton);
+
+  if (isCompleted) {
+    li.classList.add("completed");
+    checkbox.checked = true;
+  }
+
   list.insertAdjacentElement("beforeend", li);
 
-  const liCheckbox = li.querySelector('input[type="checkbox"]');
-  liCheckbox.addEventListener("change", () => {
-    if (liCheckbox.checked) {
+  checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
       li.classList.add("completed");
     } else {
       li.classList.remove("completed");
     }
+    savedTasks();
   });
 
-  const liBtnDelete = li.querySelector(".todo-item__delete");
-  liBtnDelete.addEventListener("click", () => {
+  deleteButton.addEventListener("click", () => {
     list.removeChild(li);
     savedTasks();
   });
@@ -42,8 +58,15 @@ function createTask(inputValue) {
 
 function savedTasks() {
   let tasks = [];
-  list.querySelectorAll("li .todo-item__description").forEach((item) => {
-    tasks.push(item.textContent.trim());
+  list.querySelectorAll("li").forEach((item) => {
+    const task = {
+      description: item
+        .querySelector(".todo-item__description")
+        .textContent.trim(),
+      completed: item.classList.contains("completed"),
+      checkboxState: item.querySelector('input[type="checkbox"]').checked,
+    };
+    tasks.push(task);
   });
 
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -52,8 +75,14 @@ function savedTasks() {
 function getTasks() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-  tasks.forEach(createTask);
+  if (list.children.length === 0) {
+    tasks.forEach((task) => {
+      createTask(task.description, task.completed);
+    });
+  }
 }
+
+window.addEventListener("DOMContentLoaded", getTasks);
 
 window.addEventListener("storage", (e) => {
   if (e.key === "tasks") {
