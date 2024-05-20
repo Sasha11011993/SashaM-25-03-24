@@ -1,36 +1,10 @@
-// Вам потрібно зробити конструктор сутності "Студент". Студент має ім'я, прізвище, рік народження — це властивості. Є масив з оцінками, це також властивість. І є можливість отримати вік студента та його середній бал – це методи.
-// Ще у всіх Студентів є по масиву однакової довжини, у ньому 25 елементів, спочатку він не заповнений, але на 25 елементів. Це масив, в якому відзначається відвідуваність, щоразу коли ми викликаємо метод .present() на чергове порожнє місце, в масив записується true, коли викликаємо .absent() - записується false. Передбачте будь-який захист від того, щоб у масиві відвідуваності не могло бути більше 25 записів. Масив – це властивість, present та absent – методи.
-// Останній метод: .summary(), перевіряє середню оцінку і середнє відвідування(кількістьВідвідин/кількістьЗанять), і якщо середня оцінка більше 90, а середнє відвідування більше 0.9, то метод summary повертає рядок "Молодець!", якщо одне з цих значень менше , то - "Добре, але можна краще ", якщо обидва нижче - "Редиска!".
-
 class Student {
-  constructor(name, surname, birthYear, grades) {
+  constructor(name, surname, birthYear, assessments = []) {
     this.name = name;
     this.surname = surname;
     this.birthYear = birthYear;
+    this.assessments = assessments;
     this.attendance = new Array(25).fill(null);
-    this.grades = grades || [];
-  }
-
-  present() {
-    this.updateAttendance(true);
-  }
-
-  absent() {
-    this.updateAttendance(false);
-  }
-
-  updateAttendance(status) {
-    const emptyIndex = this.attendance.indexOf(null);
-    if (emptyIndex !== -1 && emptyIndex < 25) {
-      this.attendance[emptyIndex] = status;
-      console.log(
-        `${this.name} ${this.surname} marked as ${
-          status ? "present" : "absent"
-        }`
-      );
-    } else {
-      console.log("Attendance array is full. Cannot add more entries.");
-    }
   }
 
   getAge() {
@@ -38,31 +12,50 @@ class Student {
     return currentYear - this.birthYear;
   }
 
-  getAverageGrade() {
-    if (this.grades.length === 0) {
-      return "No grades available";
-    }
-    const sum = this.grades.reduce((total, grade) => total + grade, 0);
-    return sum / this.grades.length;
+  getAverage() {
+    if (this.assessments.length === 0) return 0;
+    const sum = this.assessments.reduce((acc, val) => acc + val, 0);
+    const average = sum / this.assessments.length;
+    return Math.round(average);
   }
 
-  getAverageAttendance() {
-    if (this.attendance.length === 0) {
-      return 0; // Повертаємо 0, якщо масив відвідуваності пустий
+  present() {
+    if (this.attendance.filter((val) => val === true).length >= 25) {
+      console.log("Максимальна кількість відвідувань досягнута.");
+      return this;
     }
-    const totalPresent = this.attendance.filter(
-      (status) => status === true
-    ).length;
-    return totalPresent / this.attendance.length;
+    for (let i = 0; i < this.attendance.length; i++) {
+      if (this.attendance[i] === null) {
+        this.attendance[i] = true;
+        break;
+      }
+    }
+    return this;
+  }
+
+  absent() {
+    if (this.attendance.filter((val) => val === true).length >= 25) {
+      console.log("Максимальна кількість відвідувань досягнута.");
+      return this;
+    }
+    for (let i = 0; i < this.attendance.length; i++) {
+      if (this.attendance[i] === null) {
+        this.attendance[i] = false;
+        break;
+      }
+    }
+    return this;
   }
 
   summary() {
-    const averageGrade = this.getAverageGrade();
-    const averageAttendance = this.getAverageAttendance();
+    const averageAssessment = this.getAverage();
+    const attendancePercentage =
+      this.attendance.filter((val) => val === true).length /
+      this.attendance.length;
 
-    if (averageGrade > 90 && averageAttendance > 0.9) {
+    if (averageAssessment > 90 && attendancePercentage > 0.9) {
       return "Молодець!";
-    } else if (averageGrade > 90 || averageAttendance > 0.9) {
+    } else if (averageAssessment > 90 || attendancePercentage > 0.9) {
       return "Добре, але можна краще";
     } else {
       return "Редиска!";
@@ -70,12 +63,19 @@ class Student {
   }
 }
 
-// Приклад використання
-const student = new Student("Sasha", "Mikhalsky", 1993, [90, 85, 95]);
-console.log(student.getAge()); // Виведе вік студента
-console.log(student.getAverageGrade()); // Виведе середній бал
-console.log(student.getAverageAttendance());
-console.log(student.summary());
-console.log(student.present()); // Позначити присутність
-console.log(student.absent()); // Позначити відсутність
-console.log(student.attendance); // Перевірка масиву відвідуваності
+const student1 = new Student(
+  "Олександр",
+  "Михальський",
+  1993,
+  [95, 90, 90, 90, 95, 95]
+);
+console.log(student1.getAge());
+console.log(student1.getAverage());
+console.log(student1.present().absent().present());
+console.log(student1.summary());
+
+const student2 = new Student("Марія", "Іванова", 2001, [80, 75, 85]);
+console.log(student2.getAge());
+console.log(student2.getAverage());
+console.log(student2.present().present().present());
+console.log(student2.summary());
